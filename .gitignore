@@ -8,3 +8,4 @@ venv.bak/
 
 # Big Files
 blog_recommender/Medium_Clean.csv
+blog_recommender/similarity-score.csv

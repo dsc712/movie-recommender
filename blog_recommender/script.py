@@ -1,14 +1,7 @@
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 import pandas as pd
-
-
-def get_title_from_index(index):
-    return df[df.index == index]["Title"].values[0]
-
-
-def get_index_from_title(title):
-    return df[df.Title == title]["index"].values[0]
+import numpy as np
 
 
 # Step 1: Read CSV File
@@ -35,19 +28,5 @@ X = cv.fit_transform(df["combined_features"])
 
 # Step 5: Compute the Cosine Similarity based on the count_matrix
 similarity_score = cosine_similarity(X)
-
-blog_user_read = "Futures of AI, Friendly AI?"
-
-# Step 6: Get index of this blog from its title
-blog_index = get_index_from_title(blog_user_read)
-similar_blog = list(enumerate(similarity_score[blog_index]))
-# Step 7: Get a list of similar blog in descending order of similarity score
-recommendations = sorted(similar_blog, key=lambda x: x[1], reverse=True)
-
-# Step 8: Print titles of first 50 blog
-i = 0
-for blog in recommendations:
-    print(get_title_from_index(blog[0]))
-    i = i + 1
-    if i > 50:
-        break
+# save similarity matrix to csv
+np.savetxt("similarity-score.csv", similarity_score, delimiter=",")
